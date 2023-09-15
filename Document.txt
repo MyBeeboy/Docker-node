@@ -1,0 +1,15 @@
+network create test
+
+docker run --name mysql --network test -p 3306:3306 -d -v C:/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456789 mysql
+
+docker run --name phpmyadmin --network test -d -p 8082:80 --link mysql:db phpmyadmin
+
+git clone https://github.com/reeriigit/final-docker-server.git
+
+git clone https://github.com/reeriigit/react-project.git
+
+docker run --name server --network test -d -p 3333:3333 server
+
+docker build -t app .
+
+docker run --name app --network test -d -p 3001:3000 app
